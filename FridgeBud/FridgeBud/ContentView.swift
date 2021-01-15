@@ -38,27 +38,32 @@ func hell(){
 //                        }
 //    }
 //}
+var finalListIng: [String] = []
+
+
 struct ContentView: View {
     @State var ing: String = ""
     @State var ingreds : [String] = []
     var body: some View {
+        NavigationView{
         GeometryReader{ geometry in
             VStack(){
-            Rectangle().fill(Color.blue).frame(height:50)
-        Spacer()
+//                Rectangle().fill(Color.blue).frame(height:50).navigationBarTitle("")
+//        Spacer()
             Text("Fridge App").font(.largeTitle).fontWeight(.bold).padding()
 //        Spacer()
         HStack{
             TextField("Enter ingredent...", text: self.$ing).padding().frame(width:(geometry.size.width/(3/2)), height:geometry.size.height/10).border(Color.green, width: 2)
             Button("Enter Ingredient", action:{
-                self.ingreds.append(self.$ing.wrappedValue)
+                if(self.$ing.wrappedValue != ""){
+                    self.ingreds.append(self.$ing.wrappedValue)}
 //                addToIngreds(item:self.$ing.wrappedValue )
 //                ingreds.append(self.$ing.wrappedValue)
 //                ingreds[0] = self.$ing.wrappedValue
                 print(self.$ing.wrappedValue)
             }).frame(width:geometry.size.width*(1/3.5),height:geometry.size.height/10).border(Color.blue, width:1)
                 }
-                Spacer()
+//                Spacer()
         HStack{
 //            ForEach(ingreds, id:\.self){
 ////                print()
@@ -68,18 +73,40 @@ struct ContentView: View {
 //                }
                 if (!self.ingreds.isEmpty) {
                     ForEach(0..<self.ingreds.count, id:\.self){
-                        value in Text(self.ingreds[value])
+                        value in (Button("\(self.ingreds[value])", action:{}).padding().background(Color.green))
                     }
                     
                 }
                 else{
-                    Text("No ingreds")
+                    Text("No Ingredients entered")
                 }
                 }
         Spacer()
-            Button("GO!", action:hell).padding().frame(width:geometry.size.width/2).background(Color.accentColor).foregroundColor(Color.white).cornerRadius(8).font(/*@START_MENU_TOKEN@*/.largeTitle/*@END_MENU_TOKEN@*/)
+//            Button("GO!", action:hell).padding().frame(width:geometry.size.width/2).background(Color.accentColor).foregroundColor(Color.white).cornerRadius(8).font(/*@START_MENU_TOKEN@*/.largeTitle/*@END_MENU_TOKEN@*/)
+                NavigationLink(destination:secondView(chosenIngredients: self.$ingreds)){
+                    Text("GO!")
+//                        .frame(width:geometry.size.width/2).background(Color.accentColor).foregroundColor(Color.white).cornerRadius(8).font(/*@START_MENU_TOKEN@*/.largeTitle/*@END_MENU_TOKEN@*/)
+                }
+                
         Spacer()
             }
+        }
+    }
+}
+}
+
+struct secondView: View{
+    @Binding var chosenIngredients: [String]
+    var body: some View{
+        VStack{
+        Text("hello")
+        Text("\(chosenIngredients[0])")
+//        if (!self.chosenIngredients.isEmpty) {
+//            ForEach(0..<self.chosenIngredients.count, id:\.self){
+//                value in (Button("\(self.chosenIngredients[value])", action:{}).padding())
+//            }
+//
+//        }
         }
     }
 }
