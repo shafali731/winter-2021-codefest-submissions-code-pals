@@ -22,7 +22,7 @@ struct ContentView: View {
             VStack(){
 //                Rectangle().fill(Color.blue).frame(height:50).navigationBarTitle("")
 //        Spacer()
-            Text("Fridge App").font(.largeTitle).fontWeight(.bold).padding()
+            Text("FridgeBud").font(.largeTitle).fontWeight(.bold).padding()
 //        Spacer()
         HStack{
             TextField("Enter ingredent...", text: self.$ing).padding().frame(width:(geometry.size.width/(3/2)), height:geometry.size.height/10).border(Color.green, width: 2)
@@ -49,7 +49,7 @@ struct ContentView: View {
 //                NavigationLink(destination:SecondView(chosenIngredients: self.$ingreds)){
 //                    Text("GO!")
                 NavigationLink(destination: RecipeList()){
-                Text("GO!")
+                Text("Let's Get Cooking!")
 //                        .frame(width:geometry.size.width/2).background(Color.accentColor).foregroundColor(Color.white).cornerRadius(8).font(/*@START_MENU_TOKEN@*/.largeTitle/*@END_MENU_TOKEN@*/)
                 }
                 
