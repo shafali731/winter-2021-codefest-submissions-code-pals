@@ -22,30 +22,34 @@ struct ContentView: View {
             VStack(){
 //                Rectangle().fill(Color.blue).frame(height:50).navigationBarTitle("")
 //        Spacer()
-            Text("FridgeBud").font(.largeTitle).fontWeight(.bold).padding()
+                Text("FridgeBud").font(.largeTitle).fontWeight(.bold).padding()
 //        Spacer()
-        HStack{
-            TextField("Enter ingredent...", text: self.$ing).padding().frame(width:(geometry.size.width/(3/2)), height:geometry.size.height/10).border(Color.green, width: 2)
-            Button("Enter Ingredient", action:{
-                if(self.$ing.wrappedValue != ""){
-                    self.ingreds.append((self.$ing.wrappedValue).replacingOccurrences(of: " ",with: "-"))
-                    self.$ing.wrappedValue = ""
+                HStack{
+                    TextField("Enter ingredent...", text: self.$ing).padding().frame(width:(geometry.size.width/(3/2)), height:geometry.size.height/10).border(Color.green, width: 2)
+                    Button("Enter Ingredient", action:{
+                        if(self.$ing.wrappedValue != ""){
+                            if (!(self.ingreds.contains(self.$ing.wrappedValue))){
+                                self.ingreds.append((self.$ing.wrappedValue).replacingOccurrences(of: " ",with: "-"))
+                            }
+                            self.$ing.wrappedValue = ""
+                        }
+                        
+        //                print("The list is: \(self.$ing.wrappedValue)")
+                    }).frame(width:geometry.size.width*(1/3.5),height:geometry.size.height/10).border(Color.blue, width:1)
                 }
-//                print("The list is: \(self.$ing.wrappedValue)")
-            }).frame(width:geometry.size.width*(1/3.5),height:geometry.size.height/10).border(Color.blue, width:1)
-                }
-        HStack{
+                HStack{
 
-                if (!self.ingreds.isEmpty) {
-                    ForEach(0..<self.ingreds.count, id:\.self){
-                        value in (Button("\((self.ingreds[value]).replacingOccurrences(of: "-", with: " "))", action:{self.ingreds.remove(at: value)}).padding().background(Color.green))
+                    if (!self.ingreds.isEmpty) {
+                        ForEach(0..<self.ingreds.count, id:\.self){
+                            value in (Button("\((self.ingreds[value]).replacingOccurrences(of: "-", with: " "))", action:{self.ingreds.remove(at: value)}).padding().background(Color.green))
+                        }
+                        
                     }
-                    
+                    else{
+                        Text("No Ingredients entered")
+                    }
                 }
-                else{
-                    Text("No Ingredients entered")
-                }
-                }
+                
         Spacer()
 //            Button("GO!", action:hell).padding().frame(width:geometry.size.width/2).background(Color.accentColor).foregroundColor(Color.white).cornerRadius(8).font(/*@START_MENU_TOKEN@*/.largeTitle/*@END_MENU_TOKEN@*/)
 //                NavigationLink(destination:SecondView(chosenIngredients: self.$ingreds)){

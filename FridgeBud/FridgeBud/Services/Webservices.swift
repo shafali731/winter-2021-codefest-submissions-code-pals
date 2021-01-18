@@ -10,7 +10,7 @@ import Foundation
 class Webservice{
     func getRecipes(getRecipesIngredients: [String], completion:@escaping ([Response]) -> ()){
         var urlIngreds: String = ""
-        let apiKey: String = ""
+        let apiKey: String = "ca8dd14426f04b6f958d3e200358d633"
 //        print("webservice: \(getRecipesIngredients[0])")
         if(!getRecipesIngredients.isEmpty){
             print("webservice: \(getRecipesIngredients[0])")
