@@ -14,8 +14,8 @@ class RecipeListViewModel: ObservableObject{
     init(ingredient: [String]){
         self.ingredientsChosen = ingredient
         if(!ingredientsChosen.isEmpty){
-            print(ingredientsChosen[0])}
-        fetchRecipes(ingredientsList: ingredientsChosen)
+            print(ingredientsChosen[0])
+            fetchRecipes(ingredientsList: ingredientsChosen)}
     }
     var recipes = [Response](){
         didSet{

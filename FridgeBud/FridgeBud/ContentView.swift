@@ -28,7 +28,9 @@ struct ContentView: View {
             TextField("Enter ingredent...", text: self.$ing).padding().frame(width:(geometry.size.width/(3/2)), height:geometry.size.height/10).border(Color.green, width: 2)
             Button("Enter Ingredient", action:{
                 if(self.$ing.wrappedValue != ""){
-                    self.ingreds.append(self.$ing.wrappedValue)}
+                    self.ingreds.append((self.$ing.wrappedValue).replacingOccurrences(of: " ",with: "-"))
+                    self.$ing.wrappedValue = ""
+                }
 //                print("The list is: \(self.$ing.wrappedValue)")
             }).frame(width:geometry.size.width*(1/3.5),height:geometry.size.height/10).border(Color.blue, width:1)
                 }
@@ -36,7 +38,7 @@ struct ContentView: View {
 
                 if (!self.ingreds.isEmpty) {
                     ForEach(0..<self.ingreds.count, id:\.self){
-                        value in (Button("\(self.ingreds[value])", action:{}).padding().background(Color.green))
+                        value in (Button("\((self.ingreds[value]).replacingOccurrences(of: "-", with: " "))", action:{self.ingreds.remove(at: value)}).padding().background(Color.green))
                     }
                     
                 }
