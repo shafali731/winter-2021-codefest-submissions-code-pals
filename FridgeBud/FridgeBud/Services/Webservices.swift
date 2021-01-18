@@ -25,7 +25,7 @@ class Webservice{
         }
         
 //        guard let url = URL(string:"https://api.spoonacular.com/recipes/findByIngredients?apiKey=d05c6cc4c5f44729b97a878c398eca4d&ingredients=apples,+flour,+sugar&number=2") else{
-        guard let url = URL(string:"https://api.spoonacular.com/recipes/findByIngredients?apiKey=\(apiKey)&ingredients=\(urlIngreds)&number=10") else{
+        guard let url = URL(string:"https://api.spoonacular.com/recipes/findByIngredients?apiKey=\(apiKey)&ingredients=\(urlIngreds)&number=20") else{
 
             fatalError("Url not correct")
         }

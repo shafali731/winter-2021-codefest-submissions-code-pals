@@ -134,6 +134,7 @@ struct RecipeList: View {
 //        }
 //    }
     var body: some View{
+        GeometryReader{ geometry in
 //        NavigationView{
 //        var model = getModel(ingredient: chosenIngredients)
 //        List(model.recipes){
@@ -142,13 +143,15 @@ struct RecipeList: View {
         
 //        VStack{
 //            Text("Ingredients Entered: \(chosenIngredients) ")
-            List(model.recipes){
+            List(self.model.recipes){
                 recipe in NavigationLink(destination: RecipeDetail(RecipeDetailIngred: recipe)){
+                    RemoteImage(url: recipe.image).frame(width: geometry.size.width/5, height:geometry.size.height/10)
                 Text("\(recipe.title)")
                 }.navigationBarTitle("Recipes")
             }
 //        }
 //        }
+        }
     }
 }
 struct RecipeDetail: View{
@@ -159,6 +162,9 @@ struct RecipeDetail: View{
     var body: some View{
 //        NavigationView{
         VStack{
+            RemoteImage(url: RecipeDetailIngred.image)
+            .aspectRatio(contentMode: .fit)
+            .frame(width: 200)
             Text(RecipeDetailIngred.title)
             Text("\(RecipeDetailIngred.usedIngredientCount)")
             Text("\(RecipeDetailIngred.missedIngredientCount)")
@@ -185,19 +191,65 @@ extension View {
         modifier( HiddenNavigationBar() )
     }
 }
-//struct secondView: View{
-//    @Binding var chosenIngredients: [String]
-//    var body: some View{
-//        VStack{
-//        Text("hello")
-//        Text("\(chosenIngredients[0])")
-////        if (!self.chosenIngredients.isEmpty) {
-////            ForEach(0..<self.chosenIngredients.count, id:\.self){
-////                value in (Button("\(self.chosenIngredients[value])", action:{}).padding())
-////            }
-////
-////        }
-//        }
-//    }
-//}
 
+//Code imported from https://www.hackingwithswift.com/forums/swiftui/loading-images/3292
+
+struct RemoteImage: View {
+    private enum LoadState {
+        case loading, success, failure
+    }
+
+    private class Loader: ObservableObject {
+        var data = Data()
+        var state = LoadState.loading
+
+        init(url: String) {
+            guard let parsedURL = URL(string: url) else {
+                fatalError("Invalid URL: \(url)")
+            }
+
+            URLSession.shared.dataTask(with: parsedURL) { data, response, error in
+                if let data = data, data.count > 0 {
+                    self.data = data
+                    self.state = .success
+                } else {
+                    self.state = .failure
+                }
+
+                DispatchQueue.main.async {
+                    self.objectWillChange.send()
+                }
+            }.resume()
+        }
+    }
+
+    @ObservedObject private var loader: Loader
+    var loading: Image
+    var failure: Image
+
+    var body: some View {
+        selectImage()
+            .resizable()
+    }
+
+    init(url: String, loading: Image = Image(systemName: "photo"), failure: Image = Image(systemName: "multiply.circle")) {
+        _loader = ObservedObject(wrappedValue: Loader(url: url))
+        self.loading = loading
+        self.failure = failure
+    }
+
+    private func selectImage() -> Image {
+        switch loader.state {
+        case .loading:
+            return loading
+        case .failure:
+            return failure
+        default:
+            if let image = UIImage(data: loader.data) {
+                return Image(uiImage: image)
+            } else {
+                return failure
+            }
+        }
+    }
+}
