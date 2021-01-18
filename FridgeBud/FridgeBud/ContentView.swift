@@ -62,25 +62,76 @@ struct ContentView: View {
 //func getModel(ingredient: [String])-> RecipeListViewModel{
 //    return RecipeListViewModel(ingredient)
 //}
+//func makeIngredString(ingredientsStringEntry: [String])-> String{
+//    var ingredString = ""
+////        if (!ingredientsStringEntry.isEmpty) {
+//            ForEach(0..<ingredientsStringEntry.count, id:\.self){
+//                value in ingredString += "\(value), "
+//            }
+//    return ingredString
+////        }
+////        else{
+////            Text("No Ingredients entered")
+////        }
+//    }
 struct RecipeList: View {
 //    @Binding var chosenIngredients: [String]
     var chosenIngredients: [String]
     var model: RecipeListViewModel
+//    @State var ingredString : String = []
 //    var model = RecipeListViewModel(ingredient : chosenIngredients)
     init(chosenIngredients: [String]){
         self.chosenIngredients = chosenIngredients
         self.model = RecipeListViewModel(ingredient : chosenIngredients)
+//        self.ingredString = ""
     }
 //    init(){
 //        Webservice().getRecipes{
 //            print($0)
 //        }
 //    }
+//    func makeIngredString(){
+//        if (!self.chosenIngredients.isEmpty) {
+//            ForEach(0..<self.chosenIngredients.count, id:\.self){
+//                value in ingredString += "\(value), "
+//            }
+//
+//        }
+//        else{
+//            Text("No Ingredients entered")
+//        }
+//    }
     var body: some View{
+//        NavigationView{
 //        var model = getModel(ingredient: chosenIngredients)
-        List(model.recipes){
-            recipe in Text(recipe.title)
+//        List(model.recipes){
+//            recipe in Text(recipe.title)
+//        }
+        
+//        VStack{
+//            Text("Ingredients Entered: \(chosenIngredients) ")
+            List(model.recipes){
+                recipe in NavigationLink(destination: RecipeDetail(RecipeDetailIngred: recipe)){
+                Text("\(recipe.title)")
+                }.navigationBarTitle("Recipes")
+            }
+//        }
+//        }
+    }
+}
+struct RecipeDetail: View{
+    var RecipeDetailIngred: Response
+    init(RecipeDetailIngred: Response){
+        self.RecipeDetailIngred = RecipeDetailIngred
+    }
+    var body: some View{
+//        NavigationView{
+        VStack{
+            Text(RecipeDetailIngred.title)
+            Text("\(RecipeDetailIngred.usedIngredientCount)")
+            Text("\(RecipeDetailIngred.missedIngredientCount)")
         }
+//        }
     }
 }
 
@@ -89,7 +140,19 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
+struct HiddenNavigationBar: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+        .navigationBarTitle("", displayMode: .inline)
+        .navigationBarHidden(true)
+    }
+}
 
+extension View {
+    func hiddenNavigationBarStyle() -> some View {
+        modifier( HiddenNavigationBar() )
+    }
+}
 //struct secondView: View{
 //    @Binding var chosenIngredients: [String]
 //    var body: some View{
