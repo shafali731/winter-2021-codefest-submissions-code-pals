@@ -8,10 +8,27 @@
 import Foundation
 
 class Webservice{
-    func getRecipes(completion:@escaping ([Response]) -> ()){
-        guard let url = URL(string:"https://api.spoonacular.com/recipes/findByIngredients?apiKey=d05c6cc4c5f44729b97a878c398eca4d&ingredients=apples,+flour,+sugar&number=2") else{
+    func getRecipes(getRecipesIngredients: [String], completion:@escaping ([Response]) -> ()){
+        var urlIngreds: String = ""
+//        print("webservice: \(getRecipesIngredients[0])")
+        if(!getRecipesIngredients.isEmpty){
+            print("webservice: \(getRecipesIngredients[0])")
+            for item in getRecipesIngredients{
+                if(item == getRecipesIngredients[0]){
+                    urlIngreds += item
+                }
+                else{
+                    urlIngreds += ",+\(item)"
+                }
+            }
+        }
+        
+//        guard let url = URL(string:"https://api.spoonacular.com/recipes/findByIngredients?apiKey=d05c6cc4c5f44729b97a878c398eca4d&ingredients=apples,+flour,+sugar&number=2") else{
+        guard let url = URL(string:"https://api.spoonacular.com/recipes/findByIngredients?apiKey=d05c6cc4c5f44729b97a878c398eca4d&ingredients=\(urlIngreds)&number=10") else{
+
             fatalError("Url not correct")
         }
+        print(url)
         URLSession.shared.dataTask(with: url){
             data, _, _ in
             let recipes = try! JSONDecoder().decode([Response].self, from: data!)

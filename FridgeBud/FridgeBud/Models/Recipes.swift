@@ -42,18 +42,18 @@ struct Response: Codable, Hashable, Identifiable{
 }
 struct ingredDict: Codable{
     let id: Int
-    let amount: Float
-    let unit: String
-    let unitLong: String
-    let unitShort: String
-    let aisle: String
-    let name: String
-    let original: String
-    let originalString: String
-    let originalName: String
-    let metaInformation: [String]
-    let meta: [String]
-    let image: String
+    let amount: Float?
+    let unit: String?
+    let unitLong: String?
+    let unitShort: String?
+    let aisle: String?
+    let name: String?
+    let original: String?
+    let originalString: String?
+    let originalName: String?
+    let metaInformation: [String]?
+    let meta: [String]?
+    let image: String?
     enum CodingKeys: String, CodingKey {
         case id = "id"
         case amount = "amount"

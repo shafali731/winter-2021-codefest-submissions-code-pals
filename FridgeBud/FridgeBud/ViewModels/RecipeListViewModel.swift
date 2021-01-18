@@ -9,17 +9,21 @@ import Foundation
 import Combine
 import SwiftUI
 
-final class RecipeListViewModel: ObservableObject{
-    init(){
-        fetchRecipes()
+class RecipeListViewModel: ObservableObject{
+    @State var ingredientsChosen : [String]
+    init(ingredient: [String]){
+        self.ingredientsChosen = ingredient
+        if(!ingredientsChosen.isEmpty){
+            print(ingredientsChosen[0])}
+        fetchRecipes(ingredientsList: ingredientsChosen)
     }
     var recipes = [Response](){
         didSet{
             didChange.send(self)
         }
     }
-    private func fetchRecipes(){
-        Webservice().getRecipes{
+    private func fetchRecipes(ingredientsList : [String]){
+        Webservice().getRecipes(getRecipesIngredients: ingredientsList){
             self.recipes = $0
         }
     }

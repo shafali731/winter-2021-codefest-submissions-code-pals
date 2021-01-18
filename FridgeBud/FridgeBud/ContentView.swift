@@ -29,7 +29,7 @@ struct ContentView: View {
             Button("Enter Ingredient", action:{
                 if(self.$ing.wrappedValue != ""){
                     self.ingreds.append(self.$ing.wrappedValue)}
-                print(self.$ing.wrappedValue)
+//                print("The list is: \(self.$ing.wrappedValue)")
             }).frame(width:geometry.size.width*(1/3.5),height:geometry.size.height/10).border(Color.blue, width:1)
                 }
         HStack{
@@ -48,7 +48,7 @@ struct ContentView: View {
 //            Button("GO!", action:hell).padding().frame(width:geometry.size.width/2).background(Color.accentColor).foregroundColor(Color.white).cornerRadius(8).font(/*@START_MENU_TOKEN@*/.largeTitle/*@END_MENU_TOKEN@*/)
 //                NavigationLink(destination:SecondView(chosenIngredients: self.$ingreds)){
 //                    Text("GO!")
-                NavigationLink(destination: RecipeList()){
+                NavigationLink(destination: RecipeList(chosenIngredients: self.$ingreds.wrappedValue)){
                 Text("Let's Get Cooking!")
 //                        .frame(width:geometry.size.width/2).background(Color.accentColor).foregroundColor(Color.white).cornerRadius(8).font(/*@START_MENU_TOKEN@*/.largeTitle/*@END_MENU_TOKEN@*/)
                 }
@@ -59,15 +59,25 @@ struct ContentView: View {
     }
 }
 }
-
+//func getModel(ingredient: [String])-> RecipeListViewModel{
+//    return RecipeListViewModel(ingredient)
+//}
 struct RecipeList: View {
-    var model = RecipeListViewModel()
+//    @Binding var chosenIngredients: [String]
+    var chosenIngredients: [String]
+    var model: RecipeListViewModel
+//    var model = RecipeListViewModel(ingredient : chosenIngredients)
+    init(chosenIngredients: [String]){
+        self.chosenIngredients = chosenIngredients
+        self.model = RecipeListViewModel(ingredient : chosenIngredients)
+    }
 //    init(){
 //        Webservice().getRecipes{
 //            print($0)
 //        }
 //    }
     var body: some View{
+//        var model = getModel(ingredient: chosenIngredients)
         List(model.recipes){
             recipe in Text(recipe.title)
         }
