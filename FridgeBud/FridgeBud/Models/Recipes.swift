@@ -28,135 +28,133 @@ struct Response: Codable, Hashable, Identifiable{
     }
 }
 struct complexResult: Codable, Identifiable{
+    let vegetarian: Bool
+    let vegan: Bool
+    let glutenFree: Bool
+    let dairyFree: Bool
+    let veryHealthy: Bool
+    let cheap: Bool
+    let veryPopular: Bool
+    let sustainable: Bool
+    let weightWatcherSmartPoints: Int
+    let gaps: String
+    let lowFodmap: Bool
+    let aggregateLikes: Int
+    let spoonacularScore: Float
+    let healthScore: Float
+    let creditsText: String
+    let license: String
+    let sourceName: String
+    let pricePerServing: Float
     let id: Int
+    let title: String
+    let readyInMinutes: Int
+    let servings: Int
+    let sourceUrl: String
+    let image: String
+    let imageType: String
+    let summary: String
+    let cuisines: [String]
+    let dishTypes: [String]
+    let diets: [String]
+    let occasions: [String]
+    let analyzedInstructions: [analyzedInstructionsDict]
+    let spoonacularSourceUrl: String
     let usedIngredientsCount: Int?
     let missedIngredientCount: Int?
     let likes: Int
-    let title: String
-    let image: String
-    let imageType: String
+
     enum CodingKeys: String, CodingKey {
-            case id = "id"
-            case usedIngredientsCount = "usedIngredientsCount"
-            case missedIngredientCount = "missedIngredientCount"
-            case likes = "likes"
-            case title = "title"
-            case image = "image"
-            case imageType = "imageType"
+        case vegetarian = "vegetarian"
+        case vegan = "vegan"
+        case glutenFree = "glutenFree"
+        case dairyFree = "dairyFree"
+        case veryHealthy = "veryHealthy"
+        case cheap = "cheap"
+        case veryPopular = "veryPopular"
+        case sustainable = "sustainable"
+        case weightWatcherSmartPoints = "weightWatcherSmartPoints"
+        case gaps = "gaps"
+        case lowFodmap = "lowFodmap"
+        case aggregateLikes = "aggregateLikes"
+        case spoonacularScore = "spoonacularScore"
+        case healthScore = "healthScore"
+        case creditsText = "creditsText"
+        case license = "license"
+        case sourceName = "sourceName"
+        case pricePerServing = "pricePerServing"
+        case id = "id"
+        case title = "title"
+        case readyInMinutes = "readyInMinutes"
+        case servings = "servings"
+        case sourceUrl = "sourceUrl"
+        case image = "image"
+        case imageType = "imageType"
+        case summary = "summary"
+        case cuisines = "cuisines"
+        case dishTypes = "dishTypes"
+        case diets = "diets"
+        case occasions = "occasions"
+        case analyzedInstructions = "analyzedInstructions"
+        case spoonacularSourceUrl = "spoonacularSourceUrl"
+        case usedIngredientsCount = "usedIngredientsCount"
+        case missedIngredientCount = "missedIngredientCount"
+        case likes = "likes"
     }
 
 }
 
-//"id": 657306,
-//"usedIngredientCount": 2,
-//"missedIngredientCount": 8,
-//"likes": 0,
-//"title": "Pumpkin French Toast",
-//"image": "https://spoonacular.com/recipeImages/657306-312x231.jpg",
-//"imageType": "jpg"
-//struct Response: Codable, Hashable, Identifiable{
-//    var id = UUID()
-//    static func ==(lhs: Response, rhs: Response) -> Bool {
-//        return lhs.title == rhs.title && lhs.id == rhs.id
-//    }
-//    func hash(into hasher: inout Hasher) {
-//        hasher.combine(id)
-//    }
-//    let recipe_id: Int
-//    let title: String
-//    let image: String
-//    let imageType: String
-//    let usedIngredientCount: Int
-//    let missedIngredientCount: Int
-//    let missedIngredients: [ingredDict]?
-//    let usedIngredients: [ingredDict]?
-//    let unusedIngredients: [ingredDict]?
-//    let likes: Int
-//    enum CodingKeys: String, CodingKey {
-//        case recipe_id = "id"
-//        case title = "title"
-//        case image = "image"
-//        case imageType = "imageType"
-//        case usedIngredientCount = "usedIngredientCount"
-//        case missedIngredientCount = "missedIngredientCount"
-//        case missedIngredients = "missedIngredients"
-//        case usedIngredients = "usedIngredients"
-//        case unusedIngredients = "unusedIngredients"
-//        case likes = "likes"
-//    }
-//
-//}
-//struct ingredDict: Codable{
-//    let id: Int
-//    let amount: Float?
-//    let unit: String?
-//    let unitLong: String?
-//    let unitShort: String?
-//    let aisle: String?
-//    let name: String?
-//    let original: String?
-//    let originalString: String?
-//    let originalName: String?
-//    let metaInformation: [String]?
-//    let meta: [String]?
-//    let image: String?
-//    enum CodingKeys: String, CodingKey {
-//        case id = "id"
-//        case amount = "amount"
-//        case unit = "unit"
-//        case unitLong = "unitLong"
-//        case unitShort = "unitShort"
-//        case aisle = "aisle"
-//        case name = "name"
-//        case original = "original"
-//        case originalString = "originalString"
-//        case originalName = "originalName"
-//        case metaInformation = "metaInformation"
-//        case meta = "meta"
-//        case image = "image"
-//    }
-//}
+struct analyzedInstructionsDict: Codable, Identifiable{
+    var id = UUID()
+    static func ==(lhs: analyzedInstructionsDict, rhs: analyzedInstructionsDict) -> Bool {
+        return lhs.name == rhs.name && lhs.id == rhs.id
+    }
+    let name: String
+    let steps: [stepDict]
+    enum CodingKeys: String, CodingKey{
+        case name = "name"
+        case steps = "steps"
+    }
+}
 
-//"id": 93674,
-//"amount": 0.5,
-//"unit": "cup",
-//"unitLong": "cups",
-//"unitShort": "cup",
-//"aisle": "Milk, Eggs, Other Dairy",
-//"name": "cinnamon sugar butter",
-//"original": "1/2 cup Land O Lakes® Cinnamon Sugar Butter Spread",
-//"originalString": "1/2 cup Land O Lakes® Cinnamon Sugar Butter Spread",
-//"originalName": "Land O Lakes® Cinnamon Sugar Butter Spread",
-//"metaInformation": [
-//    "lakes®"
-//],
-//"meta": [
-//    "lakes®"
-//],
-//"image": "https://spoonacular.com/cdn/ingredients_100x100/cinnamon-sugar-butter.png"
+struct stepDict: Codable, Identifiable{
+    var id = UUID()
+    static func ==(lhs: stepDict, rhs: stepDict) -> Bool {
+        return lhs.number == rhs.number && lhs.id == rhs.id
+    }
+    let number: Int
+    let step: String
+    let ingredients: [ingredientDict]
+    let equipment: [ingredientDict]
+    enum CodingKeys: String, CodingKey{
+        case number = "number"
+        case step = "step"
+        case ingredients = "ingredients"
+        case equipment = "equipment"
+    }
+}
+struct ingredientDict: Codable, Identifiable{
+    let id: Int
+    let name: String
+    let localizedName: String
+    let image: String
+    enum CodingKeys: String, CodingKey{
+        case id = "id"
+        case name = "name"
+        case localizedName = "localizedName"
+        case image = "image"
+    }
+}
 
-//struct MyResult: Codable{
-//    let id: Int
-//    let title: String
-//    let image: String
-//    let imageType: String
-//    let usedIngredientCount: Int
-//    let missedIngredientCount: Int
-//    let missedIngredients: [String]
-//    let usedIngredients: [String]
-//    let unusedIngredients: [String]
-//    let likes: Int
-//    enum CodingKeys: String, CodingKey {
-//        case id = "id"
-//        case title = "title"
-//        case image = "image"
-//        case imageType = "imageType"
-//        case usedIngredientCount = "usedIngredientCount"
-//        case missedIngredientCount = "missedIngredientCount"
-//        case missedIngredients = "missedIngredients"
-//        case usedIngredients = "usedIngredients"
-//        case unusedIngredients = "unusedIngredients"
-//        case likes = "likes"
-//    }
-//}
-
+struct lengthDict: Codable, Identifiable{
+    var id = UUID()
+    static func ==(lhs: lengthDict, rhs: lengthDict) -> Bool {
+        return lhs.number == rhs.number && lhs.id == rhs.id
+    }
+    let number: Int
+    let unit: String
+    enum CodingKeys: String, CodingKey{
+        case number = "number"
+        case unit = "unit"
+    }
+}

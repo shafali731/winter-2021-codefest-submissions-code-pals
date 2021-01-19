@@ -21,9 +21,7 @@ struct ContentView: View {
             GeometryReader{ geometry in
                 VStack(){
     //                Rectangle().fill(Color.blue).frame(height:50).navigationBarTitle("")
-    //        Spacer()
                     Text("FridgeBud").font(.largeTitle).fontWeight(.bold).padding()
-    //        Spacer()
                     HStack{
                         TextField("Enter ingredent...", text: self.$ing).padding().frame(width:(geometry.size.width/(3/2)), height:geometry.size.height/10).border(Color.green, width: 2)
                         Button("Enter Ingredient", action:{
@@ -33,15 +31,10 @@ struct ContentView: View {
                                 }
                                 self.$ing.wrappedValue = ""
                             }
-                            
-            //                print("The list is: \(self.$ing.wrappedValue)")
                         }).frame(width:geometry.size.width*(1/3.5),height:geometry.size.height/10).border(Color.blue, width:1)
                     }
                     self.generateContent(in: geometry)
-                
                     Spacer()
-                    
-
                     NavigationLink(destination: RecipeList(chosenIngredients: self.$ingreds.wrappedValue)){
                     Text("Let's Get Cooking!")
                     }
@@ -107,51 +100,20 @@ struct ContentView: View {
 ////        }
 //    }
 struct RecipeList: View {
-//    @Binding var chosenIngredients: [String]
     var chosenIngredients: [String]
     var model: RecipeListViewModel
-//    @State var ingredString : String = []
-//    var model = RecipeListViewModel(ingredient : chosenIngredients)
     init(chosenIngredients: [String]){
         self.chosenIngredients = chosenIngredients
         self.model = RecipeListViewModel(ingredient : chosenIngredients)
-//        self.ingredString = ""
     }
-//    init(){
-//        Webservice().getRecipes{
-//            print($0)
-//        }
-//    }
-//    func makeIngredString(){
-//        if (!self.chosenIngredients.isEmpty) {
-//            ForEach(0..<self.chosenIngredients.count, id:\.self){
-//                value in ingredString += "\(value), "
-//            }
-//
-//        }
-//        else{
-//            Text("No Ingredients entered")
-//        }
-//    }
     var body: some View{
         GeometryReader{ geometry in
-//        NavigationView{
-//        var model = getModel(ingredient: chosenIngredients)
-//        List(model.recipes){
-//            recipe in Text(recipe.title)
-//        }
-        
-//        VStack{
-//            Text("Ingredients Entered: \(chosenIngredients) ")
             List(self.model.recipes[0].results){
                 recipe in NavigationLink(destination: RecipeDetail(RecipeDetailIngred: recipe)){
-//                    Text(recipe.title)
                     RemoteImage(url: recipe.image).frame(width: geometry.size.width/5, height:geometry.size.height/10)
                 Text("\(recipe.title)")
                 }.navigationBarTitle("Recipes")
             }
-//        }
-//        }
         }
     }
 }
@@ -161,17 +123,15 @@ struct RecipeDetail: View{
         self.RecipeDetailIngred = RecipeDetailIngred
     }
     var body: some View{
-//        NavigationView{
         VStack{
-//            RemoteImage(url: RecipeDetailIngred.image)
-//            .aspectRatio(contentMode: .fit)
-//            .frame(width: 200)
-//            Text(RecipeDetailIngred.title)
-//            Text("\(RecipeDetailIngred.usedIngredientCount)")
-//            Text("\(RecipeDetailIngred.missedIngredientCount)")
+            RemoteImage(url: RecipeDetailIngred.image)
+            .aspectRatio(contentMode: .fit)
+            .frame(width: 200)
             Text("\(RecipeDetailIngred.title)")
+            Text("\(RecipeDetailIngred.servings)")
+            Button("Go to the Recipe", action:{UIApplication.shared.open(URL(string: "\(self.RecipeDetailIngred.sourceUrl)")!)})
+            Button("Get a more detailed view", action:{UIApplication.shared.open(URL(string: "\(self.RecipeDetailIngred.spoonacularSourceUrl)")!)})
         }
-//        }
     }
 }
 
