@@ -143,8 +143,9 @@ struct RecipeList: View {
         
 //        VStack{
 //            Text("Ingredients Entered: \(chosenIngredients) ")
-            List(self.model.recipes){
+            List(self.model.recipes[0].results){
                 recipe in NavigationLink(destination: RecipeDetail(RecipeDetailIngred: recipe)){
+//                    Text(recipe.title)
                     RemoteImage(url: recipe.image).frame(width: geometry.size.width/5, height:geometry.size.height/10)
                 Text("\(recipe.title)")
                 }.navigationBarTitle("Recipes")
@@ -155,19 +156,20 @@ struct RecipeList: View {
     }
 }
 struct RecipeDetail: View{
-    var RecipeDetailIngred: Response
-    init(RecipeDetailIngred: Response){
+    var RecipeDetailIngred: complexResult
+    init(RecipeDetailIngred: complexResult){
         self.RecipeDetailIngred = RecipeDetailIngred
     }
     var body: some View{
 //        NavigationView{
         VStack{
-            RemoteImage(url: RecipeDetailIngred.image)
-            .aspectRatio(contentMode: .fit)
-            .frame(width: 200)
-            Text(RecipeDetailIngred.title)
-            Text("\(RecipeDetailIngred.usedIngredientCount)")
-            Text("\(RecipeDetailIngred.missedIngredientCount)")
+//            RemoteImage(url: RecipeDetailIngred.image)
+//            .aspectRatio(contentMode: .fit)
+//            .frame(width: 200)
+//            Text(RecipeDetailIngred.title)
+//            Text("\(RecipeDetailIngred.usedIngredientCount)")
+//            Text("\(RecipeDetailIngred.missedIngredientCount)")
+            Text("\(RecipeDetailIngred.title)")
         }
 //        }
     }

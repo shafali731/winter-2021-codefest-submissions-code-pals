@@ -24,7 +24,9 @@ class RecipeListViewModel: ObservableObject{
     }
     private func fetchRecipes(ingredientsList : [String]){
         Webservice().getRecipes(getRecipesIngredients: ingredientsList){
-            self.recipes = $0
+            self.recipes = [$0]
+            print("the type of the thing is: \(type(of:self.recipes))")
+            print(self.recipes)
         }
     }
     let didChange = PassthroughSubject<RecipeListViewModel,Never>()
