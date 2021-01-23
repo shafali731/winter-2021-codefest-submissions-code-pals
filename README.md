@@ -1,11 +1,14 @@
 # Hunter Codefest 2020-2021
 
 # Team Info
-### Team name: 
-### Team members (format: GitHub username, last name, first name):
+### Team name: Code Pals
+### Team members (format: GitHub username, last name, first name): 
+-   camillac, Cheng, Camilla
+-   jjj4671, Comisi, Jason
+-   shafali731, Gupta, Shafali
 
 ### Group info (check all that apply - add an X in the [ ])
-- [ ] We are a Daedalus Google Mentorship group
+- [X] We are a Daedalus Google Mentorship group
 - [ ] We are a beginner group (only completed CSCI 12700)
 
 # General Info
