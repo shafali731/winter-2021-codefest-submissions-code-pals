@@ -11,3 +11,4 @@
 2. Click on "File" on the Mac menu bar and click "Open". You may also click "Open a project or file" from the Xcode GUI.
 3. Navigate to the directory "FridgeBud" from our repository and click open.
 4. Press Command-R to open a simulated iOS device running our app.
+5. If the FridgeBud app does not open directly in the Simulator, try pressing the home button on the iPhone and opening it from the home screen.
