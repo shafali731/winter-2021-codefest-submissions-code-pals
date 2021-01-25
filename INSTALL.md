@@ -2,7 +2,7 @@
 ## Note: Our project uses Xcode, so we recommend only testing it on a Mac or any other iOS supported device.
 
 # How to install
-1. Make sure you have git bash installed so that you may clone the repo: https://git-scm.com/downloads
+1. Make sure you have git installed so that you may clone the repo: https://git-scm.com/downloads
 2. Clone our repository from GitHub.
 3. Install the latest version of Xcode from the Mac App Store: https://apps.apple.com/us/app/xcode/id497799835?mt=12
 
