@@ -18,7 +18,6 @@
 		64D4CCCB25B38BF200AEA864 /* Webservices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D4CCCA25B38BF200AEA864 /* Webservices.swift */; };
 		64D4CCCE25B38C1F00AEA864 /* Recipes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D4CCCD25B38C1F00AEA864 /* Recipes.swift */; };
 		64D4CCD125B3A68000AEA864 /* RecipeListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D4CCD025B3A68000AEA864 /* RecipeListViewModel.swift */; };
-		809E35C325B4E97000BDA39D /* appicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 809E35C225B4E97000BDA39D /* appicon.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,7 +55,6 @@
 		64D4CCCA25B38BF200AEA864 /* Webservices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Webservices.swift; sourceTree = "<group>"; };
 		64D4CCCD25B38C1F00AEA864 /* Recipes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipes.swift; sourceTree = "<group>"; };
 		64D4CCD025B3A68000AEA864 /* RecipeListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeListViewModel.swift; sourceTree = "<group>"; };
-		809E35C225B4E97000BDA39D /* appicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = appicon.png; path = ../../../appicon.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,7 +114,6 @@
 				6458AF2325B1142900D978EA /* Assets.xcassets */,
 				6458AF2825B1142900D978EA /* LaunchScreen.storyboard */,
 				6458AF2B25B1142900D978EA /* Info.plist */,
-				809E35C225B4E97000BDA39D /* appicon.png */,
 				6458AF2525B1142900D978EA /* Preview Content */,
 			);
 			path = FridgeBud;
@@ -275,7 +272,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				809E35C325B4E97000BDA39D /* appicon.png in Resources */,
 				6458AF2A25B1142900D978EA /* LaunchScreen.storyboard in Resources */,
 				6458AF2725B1142900D978EA /* Preview Assets.xcassets in Resources */,
 				6458AF2425B1142900D978EA /* Assets.xcassets in Resources */,
