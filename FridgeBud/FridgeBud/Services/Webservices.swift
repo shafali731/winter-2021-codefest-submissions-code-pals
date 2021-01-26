@@ -8,8 +8,9 @@
 import Foundation
 
 class Webservice{
-    func getRecipes(getRecipesIngredients: [String], completion:@escaping (Response) -> ()){
+    func getRecipes(getRecipesIngredients: [String], getRecipesDiets: [String], completion:@escaping (Response) -> ()){
         var urlIngreds: String = ""
+        var urlDiets: String = ""
         let apiKey: String = "faadf6181c8548f2bdbe37a0d80bf778"
 //        print("webservice: \(getRecipesIngredients[0])")
         if(!getRecipesIngredients.isEmpty){
@@ -23,8 +24,15 @@ class Webservice{
                 }
             }
         }
-        
-        guard let url = URL(string:"https://api.spoonacular.com/recipes/complexSearch?apiKey=\(apiKey)&includeIngredients=\(urlIngreds)&number=20&addRecipeInformation=true") else{
+        for item in getRecipesDiets{
+            if(item == getRecipesDiets[0]){
+                urlDiets += item
+            }
+            else{
+                urlDiets += ",+\(item)"
+            }
+        }
+        guard let url = URL(string:"https://api.spoonacular.com/recipes/complexSearch?apiKey=\(apiKey)&includeIngredients=\(urlIngreds)&number=20&addRecipeInformation=true&diet=\(urlDiets)") else{
 //        guard let url = URL(string:"https://api.spoonacular.com/recipes/findByIngredients?apiKey=\(apiKey)&ingredients=\(urlIngreds)&number=20&ranking=2") else{
 
             fatalError("Url not correct")
