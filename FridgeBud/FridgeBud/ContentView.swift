@@ -147,7 +147,7 @@ struct ContentView: View {
                             HStack(alignment: .center){
                                 NavigationLink(destination: RecipeList(chosenIngredients: self.$ingreds.wrappedValue, chosenDiets: self.$dietChose.wrappedValue)){
     //                            ButtonView()
-                                    Text("Let's Get Cooking")
+                                    Text("Let's Get Cooking!").font(.custom("GillSans", size:20))
                                     .frame(width: geometry.size.width/2, height: geometry.size.height/10, alignment: .center)
                                     .background(Color("button-bg"))
                                         .foregroundColor(Color.white)
@@ -200,7 +200,7 @@ struct ContentView: View {
                 }   // end of ForEach
             }
             else{
-                Text("No Ingredients entered")
+                Text("No Ingredients Entered").font(.custom("GillSans", size:18))
             }
         }
     }   // end of generateContent
@@ -417,24 +417,26 @@ struct RecipeList: View {
         self.model = RecipeListViewModel(ingredient : chosenIngredients, diets: chosenDiets )
         print(self.model.$thereAreRecipes.wrappedValue)
 //        self.haveRecipes = self.model.$thereAreRecipes
+        
     }
     var body: some View{
         GeometryReader{ geometry in
-            if(!(self.model.recipes.isEmpty)){
-            List(self.model.recipes[0].results){
-                recipe in NavigationLink(destination: RecipeDetail(RecipeDetailIngred: recipe)){
-                    RemoteImage(url: recipe.image).frame(width: geometry.size.width/5, height:geometry.size.height/10)
-                Text("\(recipe.title)")
-                }.navigationBarTitle("Recipes")
-            }
-            }
-            else{
-                VStack{
-                Text("There are no recipes with these specifications").font(.custom("GillSans", size:20))
-                Text("Some reasons why:").font(.custom("GillSans", size:20))
-                Text("You didn't enter any ingredients ").font(.custom("GillSans", size:20))
-                Text("There are too many ingredients").font(.custom("GillSans", size:20))
-                Text("There are too many diets ").font(.custom("GillSans", size:20))
+            VStack(alignment: .center){
+                if(!(self.model.recipes.isEmpty)){
+                    List(self.model.recipes[0].results){
+                        recipe in NavigationLink(destination: RecipeDetail(RecipeDetailIngred: recipe)){
+                            RemoteImage(url: recipe.image).frame(width: geometry.size.width/5, height:geometry.size.height/10)
+                        Text("\(recipe.title)")
+                        }.navigationBarTitle("Recipes")
+                    }
+                }
+                else{
+                    Text("There are no recipes with these specifications").font(.custom("GillSans", size:17))
+                    Text("Some reasons why:").font(.custom("GillSans", size:17))
+                    Text("- You didn't enter any ingredients ").font(.custom("GillSans", size:17))
+                    Text("- There are too little/many ingredients").font(.custom("GillSans", size:17))
+                    Text("- There are too many diets").font(.custom("GillSans", size:17))
+                    Spacer()
                 }
             }
         }
@@ -459,17 +461,17 @@ struct RecipeDetail: View{
                 .aspectRatio(contentMode: .fit)
                 .frame(maxWidth: .infinity, alignment: .topLeading).edgesIgnoringSafeArea(.all)
 //            Text("\(RecipeDetailIngred.title)").font(.custom("GillSans", size:25)).frame(alignment: .topLeading)
-            Text("Serving Size: \(RecipeDetailIngred.servings)").font(.custom("GillSans", size:20))
+            Text("Serving Size: \(RecipeDetailIngred.servings)").font(.custom("GillSans", size:15))
             HStack{
                 if(self.RecipeDetailIngred.cuisines.count != 0){
-                    Text("Cusines: ")
+                    Text("Cuisines:").font(.custom("GillSans", size:15))
                     ForEach(0..<RecipeDetailIngred.cuisines.count, id:\.self){
                         value in
                         Group{
                             if(value != self.RecipeDetailIngred.cuisines.count-1){
-                            Text("\(self.RecipeDetailIngred.cuisines[value]), ").font(.custom("GillSans", size:20))}
+                            Text("\(self.RecipeDetailIngred.cuisines[value]), ").font(.custom("GillSans", size:15))}
                             else{
-                                Text(self.RecipeDetailIngred.cuisines[value]).font(.custom("GillSans", size:20))
+                                Text(self.RecipeDetailIngred.cuisines[value]).font(.custom("GillSans", size:15))
                             }
                     }
                         }
@@ -477,14 +479,14 @@ struct RecipeDetail: View{
             }
             HStack{
                 if(self.RecipeDetailIngred.diets.count != 0){
-                    Text("Diets: ")
+                    Text("Diets:").font(.custom("GillSans", size:15))
                     ForEach(0..<RecipeDetailIngred.diets.count, id:\.self){
                         value in
                         Group{
                             if(value != self.RecipeDetailIngred.diets.count-1){
-                            Text("\(self.RecipeDetailIngred.diets[value]), ").font(.custom("GillSans", size:20))}
+                            Text("\(self.RecipeDetailIngred.diets[value]), ").font(.custom("GillSans", size:15))}
                             else{
-                                Text(self.RecipeDetailIngred.diets[value]).font(.custom("GillSans", size:20))
+                                Text(self.RecipeDetailIngred.diets[value]).font(.custom("GillSans", size:15))
                             }
                         }
                     }
@@ -492,14 +494,14 @@ struct RecipeDetail: View{
             }
             HStack{
                if(self.RecipeDetailIngred.dishTypes.count != 0){
-                   Text("DishTypes: ")
+                   Text("DishTypes:").font(.custom("GillSans", size:15))
                    ForEach(0..<RecipeDetailIngred.dishTypes.count, id:\.self){
                        value in
                        Group{
                            if(value != self.RecipeDetailIngred.dishTypes.count-1){
-                           Text("\(self.RecipeDetailIngred.dishTypes[value]), ").font(.custom("GillSans", size:20))}
+                           Text("\(self.RecipeDetailIngred.dishTypes[value]), ").font(.custom("GillSans", size:15))}
                            else{
-                               Text(self.RecipeDetailIngred.dishTypes[value]).font(.custom("GillSans", size:20))
+                               Text(self.RecipeDetailIngred.dishTypes[value]).font(.custom("GillSans", size:15))
                            }
                         }
                        }
@@ -507,20 +509,20 @@ struct RecipeDetail: View{
            }
             HStack{
                 if(self.RecipeDetailIngred.occasions.count != 0){
-                    Text("Occasions: ")
+                    Text("Occasions:").font(.custom("GillSans", size:15))
                     ForEach(0..<RecipeDetailIngred.occasions.count, id:\.self){
                         value in
                         Group{
                             if(value != self.RecipeDetailIngred.occasions.count-1){
-                            Text("\(self.RecipeDetailIngred.occasions[value]), ").font(.custom("GillSans", size:20))}
+                            Text("\(self.RecipeDetailIngred.occasions[value]), ").font(.custom("GillSans", size:15))}
                             else{
-                                Text(self.RecipeDetailIngred.occasions[value]).font(.custom("GillSans", size:20))
+                                Text(self.RecipeDetailIngred.occasions[value]).font(.custom("GillSans", size:15))
                             }
                         }
                     }
                 }
             }
-            Text("Ready in \(self.RecipeDetailIngred.readyInMinutes) minutes")
+            Text("Ready in \(self.RecipeDetailIngred.readyInMinutes) minutes").font(.custom("GillSans", size:15))
             Button("Go to the Recipe", action:{UIApplication.shared.open(URL(string: "\(self.RecipeDetailIngred.sourceUrl)")!)})
             Button("Get a more detailed view", action:{UIApplication.shared.open(URL(string: "\(self.RecipeDetailIngred.spoonacularSourceUrl)")!)})
             

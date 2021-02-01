@@ -11,7 +11,7 @@ class Webservice{
     func getRecipes(getRecipesIngredients: [String], getRecipesDiets: [String], completion:@escaping (Response) -> ()){
         var urlIngreds: String = ""
         var urlDiets: String = ""
-        let apiKey: String = "faadf6181c8548f2bdbe37a0d80bf778"
+        let apiKey: String = "1d9ae7c5fe194846967710e2662d808c"
 //        print("webservice: \(getRecipesIngredients[0])")
         if(!getRecipesIngredients.isEmpty){
             print("webservice: \(getRecipesIngredients[0])")
