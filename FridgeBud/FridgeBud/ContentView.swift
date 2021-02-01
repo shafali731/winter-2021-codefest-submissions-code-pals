@@ -456,6 +456,7 @@ struct RecipeDetail: View{
     var RecipeDetailIngred: complexResult
     init(RecipeDetailIngred: complexResult){
         self.RecipeDetailIngred = RecipeDetailIngred
+//        print(self.ingredientList)
     }
     var body: some View{
         ZStack{
@@ -468,10 +469,8 @@ struct RecipeDetail: View{
                         .frame(maxWidth: .infinity, alignment: .topLeading).edgesIgnoringSafeArea(.all)
                     HStack{
                         VStack{
-                //            Text("\(RecipeDetailIngred.title)").font(.custom("GillSans", size:25)).frame(alignment: .topLeading)
                             Text("Serving Size: \(RecipeDetailIngred.servings)").font(.custom("GillSans", size:15)).bold()
                             Divider()
-                            
                             // DIETS
                             HStack{
                                 if(self.RecipeDetailIngred.diets.count != 0){
@@ -507,47 +506,23 @@ struct RecipeDetail: View{
                                 }
                             }
                             Divider()
-                            
-//                            // OCCASIONS
-//                            HStack{
-//                                if(self.RecipeDetailIngred.occasions.count != 0){
-//                                    Text("Occasions:").font(.custom("GillSans", size:15))
-//                                    ForEach(0..<RecipeDetailIngred.occasions.count, id:\.self){
-//                                        value in
-//                                        Group{
-//                                            if(value != self.RecipeDetailIngred.occasions.count-1){
-//                                            Text("\(self.RecipeDetailIngred.occasions[value]), ").font(.custom("GillSans", size:15))}
-//                                            else{
-//                                                Text(self.RecipeDetailIngred.occasions[value]).font(.custom("GillSans", size:15))
-//                                            }
-//                                        }
-//                                    }
-//                                }
-//                            }
-//
-//                            Divider()
-
                             Text("Ready in \(self.RecipeDetailIngred.readyInMinutes) minutes").font(.custom("GillSans", size:15)).bold()
-//                            Divider()
                             Button("Go to the Recipe", action:{UIApplication.shared.open(URL(string: "\(self.RecipeDetailIngred.sourceUrl)")!)})
                             Button("Get a more detailed view", action:{UIApplication.shared.open(URL(string: "\(self.RecipeDetailIngred.spoonacularSourceUrl)")!)})
                             Spacer()
                         }
-
-                        VStack{
-                            Text("Ingredients:").font(.custom("GillSans", size:15)).bold()
-                                ForEach(RecipeDetailIngred.analyzedInstructions[0].steps, id:\.self){
-                                    value in
-                                    ForEach(value.ingredients, id:\.self){
-                                        ingred in
-                                            Text("\(ingred.name)").font(.custom("GillSans", size:15))
-  
-                                    }
-                                }
-                        }
-                        .padding(20)
-                        .border(Color("button-bg"), width: 2)
-                        .background(Color.white)
+                        getIngredientListFromDetail()
+//                        VStack{
+//                            Text("Ingredients:").font(.custom("GillSans", size:15)).bold()
+//                            ForEach(ingredientList, id: \.self){
+//                                ingred in
+//                                Text(ingred).font(.custom("GillSans", size:15))
+//                            }
+//
+//                        }
+//                        .padding(20)
+//                        .border(Color("button-bg"), width: 2)
+//                        .background(Color.white)
                     }   // end of HStack
                     
                     Spacer()
@@ -555,6 +530,29 @@ struct RecipeDetail: View{
             }
         }
     }
+    private func getIngredientListFromDetail() -> some View{
+        var retArr : [String] = []
+        for value in RecipeDetailIngred.analyzedInstructions[0].steps{
+            for ingred in value.ingredients{
+                if(!(retArr.contains(ingred.name))){
+//                    self.ingredientList.append(ingred.name)
+                    print(ingred.name)
+                    retArr.append(ingred.name)
+                }
+            }
+        }
+        return VStack{
+            Text("Ingredients:").font(.custom("GillSans", size:15)).bold()
+            ForEach(retArr, id: \.self){
+                ingred in
+                Text(ingred).font(.custom("GillSans", size:15))
+            }
+
+        }.padding(20)
+        .border(Color("button-bg"), width: 2)
+        .background(Color.white)
+//        return retArr
+    } //end of getIngred
 }   // end of Recipe Detail
 
 
