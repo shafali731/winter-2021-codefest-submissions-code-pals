@@ -117,10 +117,13 @@ struct analyzedInstructionsDict: Codable, Identifiable{
     }
 }
 
-struct stepDict: Codable, Identifiable{
+struct stepDict: Codable, Hashable, Identifiable{
     var id = UUID()
     static func ==(lhs: stepDict, rhs: stepDict) -> Bool {
         return lhs.number == rhs.number && lhs.id == rhs.id
+    }
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
     let number: Int
     let step: String
@@ -133,11 +136,14 @@ struct stepDict: Codable, Identifiable{
         case equipment = "equipment"
     }
 }
-struct ingredientDict: Codable, Identifiable{
+struct ingredientDict: Codable, Hashable, Identifiable{
     let id: Int
     let name: String
     let localizedName: String
     let image: String
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
     enum CodingKeys: String, CodingKey{
         case id = "id"
         case name = "name"

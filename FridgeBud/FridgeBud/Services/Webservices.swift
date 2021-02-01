@@ -11,7 +11,7 @@ class Webservice{
     func getRecipes(getRecipesIngredients: [String], getRecipesDiets: [String], completion:@escaping (Response) -> ()){
         var urlIngreds: String = ""
         var urlDiets: String = ""
-        let apiKey: String = "faadf6181c8548f2bdbe37a0d80bf778"
+        let apiKey: String = "cb149225d1ef4f51b29d2a51b7c2add5"
 //        print("webservice: \(getRecipesIngredients[0])")
         if(!getRecipesIngredients.isEmpty){
             print("webservice: \(getRecipesIngredients[0])")
@@ -32,7 +32,7 @@ class Webservice{
                 urlDiets += ",+\(item)"
             }
         }
-        guard let url = URL(string:"https://api.spoonacular.com/recipes/complexSearch?apiKey=\(apiKey)&includeIngredients=\(urlIngreds)&number=20&addRecipeInformation=true&diet=\(urlDiets)") else{
+        guard let url = URL(string:"https://api.spoonacular.com/recipes/complexSearch?apiKey=\(apiKey)&includeIngredients=\(urlIngreds)&number=1&addRecipeInformation=true&diet=\(urlDiets)") else{
 //        guard let url = URL(string:"https://api.spoonacular.com/recipes/findByIngredients?apiKey=\(apiKey)&ingredients=\(urlIngreds)&number=20&ranking=2") else{
 
             fatalError("Url not correct")

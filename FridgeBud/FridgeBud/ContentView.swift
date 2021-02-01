@@ -421,16 +421,20 @@ struct RecipeList: View {
     }
     var body: some View{
         GeometryReader{ geometry in
+
             VStack(alignment: .center){
+
                 if(!(self.model.recipes.isEmpty) && self.model.recipes[0].totalResults != 0){
                     List(self.model.recipes[0].results){
+                        
                         recipe in NavigationLink(destination: RecipeDetail(RecipeDetailIngred: recipe)){
                             RemoteImage(url: recipe.image).frame(width: geometry.size.width/5, height:geometry.size.height/10)
                         Text("\(recipe.title)")
                         }.navigationBarTitle("Recipes")
-                    }
+                    }.listRowBackground(Color("background_color"))
                 }
                 else{
+//                    Color("background_color").edgesIgnoringSafeArea(.all)
                     Text("There are no recipes with these specifications").font(.custom("GillSans", size:17))
                     Text("Some reasons why:").font(.custom("GillSans", size:17))
                     Text("- You didn't enter any ingredients ").font(.custom("GillSans", size:17))
@@ -455,66 +459,100 @@ struct RecipeDetail: View{
     }
     var body: some View{
         ZStack{
-        ScrollView(.vertical){
-        VStack(alignment: .leading, spacing: 5){
-            Text("\(RecipeDetailIngred.title)").font(.custom("GillSans", size:25)).frame(alignment: .topLeading)
-            RemoteImage(url: RecipeDetailIngred.image)
-                .aspectRatio(contentMode: .fit)
-                .frame(maxWidth: .infinity, alignment: .topLeading).edgesIgnoringSafeArea(.all)
-//            Text("\(RecipeDetailIngred.title)").font(.custom("GillSans", size:25)).frame(alignment: .topLeading)
-            Text("Serving Size: \(RecipeDetailIngred.servings)").font(.custom("GillSans", size:15))
-            HStack{
-                if(self.RecipeDetailIngred.cuisines.count != 0){
-                    Text("Cuisines:").font(.custom("GillSans", size:15))
-                    ForEach(0..<RecipeDetailIngred.cuisines.count, id:\.self){
-                        value in
-                        Group{
-                            if(value != self.RecipeDetailIngred.cuisines.count-1){
-                            Text("\(self.RecipeDetailIngred.cuisines[value]), ").font(.custom("GillSans", size:15))}
-                            else{
-                                Text(self.RecipeDetailIngred.cuisines[value]).font(.custom("GillSans", size:15))
+            Color("background_color").edgesIgnoringSafeArea(.all)
+            ScrollView(.vertical){
+                VStack{
+                    Text("\(RecipeDetailIngred.title)").font(.custom("GillSans", size:25)).frame(alignment: .topLeading)
+                    RemoteImage(url: RecipeDetailIngred.image)
+                        .aspectRatio(contentMode: .fit)
+                        .frame(maxWidth: .infinity, alignment: .topLeading).edgesIgnoringSafeArea(.all)
+                    HStack{
+                        VStack{
+                //            Text("\(RecipeDetailIngred.title)").font(.custom("GillSans", size:25)).frame(alignment: .topLeading)
+                            Text("Serving Size: \(RecipeDetailIngred.servings)").font(.custom("GillSans", size:15)).bold()
+                            Divider()
+                            
+                            // DIETS
+                            HStack{
+                                if(self.RecipeDetailIngred.diets.count != 0){
+                                    Text("Diets:").font(.custom("GillSans", size:15)).bold()
+                                    ForEach(0..<RecipeDetailIngred.diets.count, id:\.self){
+                                        value in
+                                        Group{
+                                            if(value != self.RecipeDetailIngred.diets.count-1){
+                                            Text("\(self.RecipeDetailIngred.diets[value]), ").font(.custom("GillSans", size:15))}
+                                            else{
+                                                Text(self.RecipeDetailIngred.diets[value]).font(.custom("GillSans", size:15))
+                                            }
+                                        }
+                                    }
+                                }
                             }
-                    }
-                        }
-                }
-            }
-            HStack{
-                if(self.RecipeDetailIngred.diets.count != 0){
-                    Text("Diets:").font(.custom("GillSans", size:15))
-                    ForEach(0..<RecipeDetailIngred.diets.count, id:\.self){
-                        value in
-                        Group{
-                            if(value != self.RecipeDetailIngred.diets.count-1){
-                            Text("\(self.RecipeDetailIngred.diets[value]), ").font(.custom("GillSans", size:15))}
-                            else{
-                                Text(self.RecipeDetailIngred.diets[value]).font(.custom("GillSans", size:15))
+                            Divider()
+                            
+                            // CUISINES
+                            HStack{
+                                if(self.RecipeDetailIngred.cuisines.count != 0){
+                                    Text("Cuisines:").font(.custom("GillSans", size:15))
+                                    ForEach(0..<RecipeDetailIngred.cuisines.count, id:\.self){
+                                        value in
+                                        Group{
+                                            if(value != self.RecipeDetailIngred.cuisines.count-1){
+                                            Text("\(self.RecipeDetailIngred.cuisines[value]), ").font(.custom("GillSans", size:15))}
+                                            else{
+                                                Text(self.RecipeDetailIngred.cuisines[value]).font(.custom("GillSans", size:15))
+                                            }
+                                        }
+                                    }
+                                }
                             }
-                        }
-                    }
-                }
-            }
-            HStack{
-                if(self.RecipeDetailIngred.occasions.count != 0){
-                    Text("Occasions:").font(.custom("GillSans", size:15))
-                    ForEach(0..<RecipeDetailIngred.occasions.count, id:\.self){
-                        value in
-                        Group{
-                            if(value != self.RecipeDetailIngred.occasions.count-1){
-                            Text("\(self.RecipeDetailIngred.occasions[value]), ").font(.custom("GillSans", size:15))}
-                            else{
-                                Text(self.RecipeDetailIngred.occasions[value]).font(.custom("GillSans", size:15))
-                            }
-                        }
-                    }
-                }
-            }
-            Text("Ready in \(self.RecipeDetailIngred.readyInMinutes) minutes").font(.custom("GillSans", size:15))
-            Button("Go to the Recipe", action:{UIApplication.shared.open(URL(string: "\(self.RecipeDetailIngred.sourceUrl)")!)})
-            Button("Get a more detailed view", action:{UIApplication.shared.open(URL(string: "\(self.RecipeDetailIngred.spoonacularSourceUrl)")!)})
-            
+                            Divider()
+                            
+//                            // OCCASIONS
+//                            HStack{
+//                                if(self.RecipeDetailIngred.occasions.count != 0){
+//                                    Text("Occasions:").font(.custom("GillSans", size:15))
+//                                    ForEach(0..<RecipeDetailIngred.occasions.count, id:\.self){
+//                                        value in
+//                                        Group{
+//                                            if(value != self.RecipeDetailIngred.occasions.count-1){
+//                                            Text("\(self.RecipeDetailIngred.occasions[value]), ").font(.custom("GillSans", size:15))}
+//                                            else{
+//                                                Text(self.RecipeDetailIngred.occasions[value]).font(.custom("GillSans", size:15))
+//                                            }
+//                                        }
+//                                    }
+//                                }
+//                            }
+//
+//                            Divider()
 
-        }
-    }
+                            Text("Ready in \(self.RecipeDetailIngred.readyInMinutes) minutes").font(.custom("GillSans", size:15)).bold()
+//                            Divider()
+                            Button("Go to the Recipe", action:{UIApplication.shared.open(URL(string: "\(self.RecipeDetailIngred.sourceUrl)")!)})
+                            Button("Get a more detailed view", action:{UIApplication.shared.open(URL(string: "\(self.RecipeDetailIngred.spoonacularSourceUrl)")!)})
+                            Spacer()
+                        }
+
+                        VStack{
+                            Text("Ingredients:").font(.custom("GillSans", size:15)).bold()
+                                ForEach(RecipeDetailIngred.analyzedInstructions[0].steps, id:\.self){
+                                    value in
+                                    ForEach(value.ingredients, id:\.self){
+                                        ingred in
+                                            Text("\(ingred.name)").font(.custom("GillSans", size:15))
+  
+                                    }
+                                }
+                        }
+                        .padding(20)
+                        .border(Color("button-bg"), width: 2)
+                        .background(Color.white)
+                    }   // end of HStack
+                    
+                    Spacer()
+                }
+            }
         }
     }
 }   // end of Recipe Detail
