@@ -52,6 +52,8 @@ struct ContentView: View {
                         self.generateContent(in: geometry)
                         Spacer()
     //                    DropDownMenu()
+                        self.generateDiet(in: geometry)
+                        Spacer()
                         VStack(){
                             VStack(spacing:-1){
                                 HStack(){
@@ -66,7 +68,7 @@ struct ContentView: View {
                                             if(!self.dietChose.contains("Vegetarian")){
                                                 self.dietChose.append("Vegetarian")}
                                         }){
-                                            Text("Vegetarian").padding()
+                                            Text("Vegetarian").padding(10)
                                         }.foregroundColor(.black).frame(width:geometry.size.width/2, height:30).border(Color.black, width:1)
                                         Button(action:{
                                             self.expand.toggle()
@@ -74,6 +76,13 @@ struct ContentView: View {
                                                 self.dietChose.append("Gluten-Free")}
                                         }){
                                             Text("Gluten Free").padding()
+                                        }.foregroundColor(.black).frame(width:geometry.size.width/2, height:30).border(Color.black, width:1)
+                                        Button(action:{
+                                            self.expand.toggle()
+                                            if(!self.dietChose.contains("Vegan")){
+                                                self.dietChose.append("Vegan")}
+                                        }){
+                                            Text("Vegan").padding()
                                         }.foregroundColor(.black).frame(width:geometry.size.width/2, height:30).border(Color.black, width:1)
                                         Button(action:{
                                             self.expand.toggle()
@@ -124,13 +133,15 @@ struct ContentView: View {
                                         }){
                                             Text("Whole30").padding()
                                         }.foregroundColor(.black).frame(width:geometry.size.width/2, height:30).border(Color.black, width:1)
-                                    }
-                                }.background(Color("button-bg")).animation(.spring()).frame(width:geometry.size.width/2, height:geometry.size.height/6)
-                                Spacer()
-                                self.generateDiet(in: geometry)
+                                }
+                            }.background(Color("button-bg")).animation(.spring()).frame(width:geometry.size.width/2, height:geometry.size.height/6)
+                            .padding(.bottom, 35)
+//                            self.generateDiet(in: geometry)
+//                                .offset(y:55).padding(.bottom, 55)
                                 Spacer()
         //                        self.Print("from drop: \(self.dietChose)")
-                            }
+                        }
+                            Spacer()
                             Spacer()
         //                    self.Print("from content view: \(DropDownMenu().$dietChose.wrappedValue)")
                             HStack(alignment: .center){
@@ -139,10 +150,9 @@ struct ContentView: View {
                                     Text("Let's Get Cooking")
                                     .frame(width: geometry.size.width/2, height: geometry.size.height/10, alignment: .center)
                                     .background(Color("button-bg"))
-                                    .foregroundColor(Color.white)
+                                        .foregroundColor(Color.white)
                                 }
-                            }
-                            Spacer()
+                            }.padding(.top, 50)
                         }
                     }
                 }
@@ -399,19 +409,27 @@ struct RecipeList: View {
     var chosenIngredients: [String]
     var chosenDiets : [String]
     var model: RecipeListViewModel
+//    var haveRecipes: RecipeListViewModel
     init(chosenIngredients: [String], chosenDiets: [String]){
         self.chosenIngredients = chosenIngredients
         self.chosenDiets = chosenDiets
         print("The diets: \(self.chosenDiets)")
         self.model = RecipeListViewModel(ingredient : chosenIngredients, diets: chosenDiets )
+        print(self.model.$thereAreRecipes.wrappedValue)
+//        self.haveRecipes = self.model.$thereAreRecipes
     }
     var body: some View{
         GeometryReader{ geometry in
+            if(self.model.$thereAreRecipes.wrappedValue){
             List(self.model.recipes[0].results){
                 recipe in NavigationLink(destination: RecipeDetail(RecipeDetailIngred: recipe)){
                     RemoteImage(url: recipe.image).frame(width: geometry.size.width/5, height:geometry.size.height/10)
                 Text("\(recipe.title)")
                 }.navigationBarTitle("Recipes")
+            }
+            }
+            else{
+                Text("There are no recipes with these specifications")
             }
         }
     }
