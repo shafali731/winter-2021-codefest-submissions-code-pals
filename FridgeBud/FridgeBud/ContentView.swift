@@ -451,6 +451,8 @@ struct RecipeDetail: View{
         self.RecipeDetailIngred = RecipeDetailIngred
     }
     var body: some View{
+        ZStack{
+        ScrollView(.vertical){
         VStack(alignment: .leading, spacing: 5){
             Text("\(RecipeDetailIngred.title)").font(.custom("GillSans", size:25)).frame(alignment: .topLeading)
             RemoteImage(url: RecipeDetailIngred.image)
@@ -458,19 +460,73 @@ struct RecipeDetail: View{
                 .frame(maxWidth: .infinity, alignment: .topLeading).edgesIgnoringSafeArea(.all)
 //            Text("\(RecipeDetailIngred.title)").font(.custom("GillSans", size:25)).frame(alignment: .topLeading)
             Text("Serving Size: \(RecipeDetailIngred.servings)").font(.custom("GillSans", size:20))
-            Text("Cusines: ")
-            ForEach(0..<RecipeDetailIngred.cuisines.count, id:\.self){
-                value in Text(self.RecipeDetailIngred.cuisines[value])
+            HStack{
+                if(self.RecipeDetailIngred.cuisines.count != 0){
+                    Text("Cusines: ")
+                    ForEach(0..<RecipeDetailIngred.cuisines.count, id:\.self){
+                        value in
+                        Group{
+                            if(value != self.RecipeDetailIngred.cuisines.count-1){
+                            Text("\(self.RecipeDetailIngred.cuisines[value]), ").font(.custom("GillSans", size:20))}
+                            else{
+                                Text(self.RecipeDetailIngred.cuisines[value]).font(.custom("GillSans", size:20))
+                            }
+                    }
+                        }
+                }
             }
-            Spacer()
-//            Text("Diets: ")
-//            ForEach(0..<RecipeDetailIngred.diets.count, id:\.self){
-//                value in Text(self.RecipeDetailIngred.diets[value])
-//            }
-            Spacer()
+            HStack{
+                if(self.RecipeDetailIngred.diets.count != 0){
+                    Text("Diets: ")
+                    ForEach(0..<RecipeDetailIngred.diets.count, id:\.self){
+                        value in
+                        Group{
+                            if(value != self.RecipeDetailIngred.diets.count-1){
+                            Text("\(self.RecipeDetailIngred.diets[value]), ").font(.custom("GillSans", size:20))}
+                            else{
+                                Text(self.RecipeDetailIngred.diets[value]).font(.custom("GillSans", size:20))
+                            }
+                        }
+                    }
+                }
+            }
+            HStack{
+               if(self.RecipeDetailIngred.dishTypes.count != 0){
+                   Text("DishTypes: ")
+                   ForEach(0..<RecipeDetailIngred.dishTypes.count, id:\.self){
+                       value in
+                       Group{
+                           if(value != self.RecipeDetailIngred.dishTypes.count-1){
+                           Text("\(self.RecipeDetailIngred.dishTypes[value]), ").font(.custom("GillSans", size:20))}
+                           else{
+                               Text(self.RecipeDetailIngred.dishTypes[value]).font(.custom("GillSans", size:20))
+                           }
+                        }
+                       }
+                }
+           }
+            HStack{
+                if(self.RecipeDetailIngred.occasions.count != 0){
+                    Text("Occasions: ")
+                    ForEach(0..<RecipeDetailIngred.occasions.count, id:\.self){
+                        value in
+                        Group{
+                            if(value != self.RecipeDetailIngred.occasions.count-1){
+                            Text("\(self.RecipeDetailIngred.occasions[value]), ").font(.custom("GillSans", size:20))}
+                            else{
+                                Text(self.RecipeDetailIngred.occasions[value]).font(.custom("GillSans", size:20))
+                            }
+                        }
+                    }
+                }
+            }
+            Text("Ready in \(self.RecipeDetailIngred.readyInMinutes) minutes")
             Button("Go to the Recipe", action:{UIApplication.shared.open(URL(string: "\(self.RecipeDetailIngred.sourceUrl)")!)})
             Button("Get a more detailed view", action:{UIApplication.shared.open(URL(string: "\(self.RecipeDetailIngred.spoonacularSourceUrl)")!)})
-            Spacer()
+            
+
+        }
+    }
         }
     }
 }   // end of Recipe Detail
