@@ -200,7 +200,7 @@ struct ContentView: View {
                 }   // end of ForEach
             }
             else{
-                Text("No Ingredients Entered").font(.custom("GillSans", size:18))
+                Text("Enter ingredients to start cooking!").font(.custom("GillSans", size:18))
             }
         }
     }   // end of generateContent
@@ -436,6 +436,7 @@ struct RecipeList: View {
                     Text("- You didn't enter any ingredients ").font(.custom("GillSans", size:17))
                     Text("- There are too little/many ingredients").font(.custom("GillSans", size:17))
                     Text("- There are too many diets").font(.custom("GillSans", size:17))
+                    Text("- You clicked \"Let's Get Cooking\" too fast").font(.custom("GillSans", size:17))
                     Spacer()
                 }
             }
