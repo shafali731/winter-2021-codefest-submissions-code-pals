@@ -422,7 +422,7 @@ struct RecipeList: View {
     var body: some View{
         GeometryReader{ geometry in
             VStack(alignment: .center){
-                if(!(self.model.recipes.isEmpty)){
+                if(!(self.model.recipes.isEmpty) && self.model.recipes[0].totalResults != 0){
                     List(self.model.recipes[0].results){
                         recipe in NavigationLink(destination: RecipeDetail(RecipeDetailIngred: recipe)){
                             RemoteImage(url: recipe.image).frame(width: geometry.size.width/5, height:geometry.size.height/10)
