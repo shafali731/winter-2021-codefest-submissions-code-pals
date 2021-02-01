@@ -494,21 +494,6 @@ struct RecipeDetail: View{
                 }
             }
             HStack{
-               if(self.RecipeDetailIngred.dishTypes.count != 0){
-                   Text("DishTypes:").font(.custom("GillSans", size:15))
-                   ForEach(0..<RecipeDetailIngred.dishTypes.count, id:\.self){
-                       value in
-                       Group{
-                           if(value != self.RecipeDetailIngred.dishTypes.count-1){
-                           Text("\(self.RecipeDetailIngred.dishTypes[value]), ").font(.custom("GillSans", size:15))}
-                           else{
-                               Text(self.RecipeDetailIngred.dishTypes[value]).font(.custom("GillSans", size:15))
-                           }
-                        }
-                       }
-                }
-           }
-            HStack{
                 if(self.RecipeDetailIngred.occasions.count != 0){
                     Text("Occasions:").font(.custom("GillSans", size:15))
                     ForEach(0..<RecipeDetailIngred.occasions.count, id:\.self){
