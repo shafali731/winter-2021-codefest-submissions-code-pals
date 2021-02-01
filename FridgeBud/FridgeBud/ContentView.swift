@@ -420,7 +420,7 @@ struct RecipeList: View {
     }
     var body: some View{
         GeometryReader{ geometry in
-            if(self.model.$thereAreRecipes.wrappedValue){
+            if(!(self.model.recipes.isEmpty)){
             List(self.model.recipes[0].results){
                 recipe in NavigationLink(destination: RecipeDetail(RecipeDetailIngred: recipe)){
                     RemoteImage(url: recipe.image).frame(width: geometry.size.width/5, height:geometry.size.height/10)
@@ -429,7 +429,13 @@ struct RecipeList: View {
             }
             }
             else{
-                Text("There are no recipes with these specifications")
+                VStack{
+                Text("There are no recipes with these specifications").font(.custom("GillSans", size:20))
+                Text("Some reasons why:").font(.custom("GillSans", size:20))
+                Text("You didn't enter any ingredients ").font(.custom("GillSans", size:20))
+                Text("There are too many ingredients").font(.custom("GillSans", size:20))
+                Text("There are too many diets ").font(.custom("GillSans", size:20))
+                }
             }
         }
     }
@@ -452,10 +458,18 @@ struct RecipeDetail: View{
                 .frame(maxWidth: .infinity, alignment: .topLeading).edgesIgnoringSafeArea(.all)
 //            Text("\(RecipeDetailIngred.title)").font(.custom("GillSans", size:25)).frame(alignment: .topLeading)
             Text("Serving Size: \(RecipeDetailIngred.servings)").font(.custom("GillSans", size:20))
+            Text("Cusines: ")
+            ForEach(0..<RecipeDetailIngred.cuisines.count, id:\.self){
+                value in Text(self.RecipeDetailIngred.cuisines[value])
+            }
+            Spacer()
+//            Text("Diets: ")
+//            ForEach(0..<RecipeDetailIngred.diets.count, id:\.self){
+//                value in Text(self.RecipeDetailIngred.diets[value])
+//            }
             Spacer()
             Button("Go to the Recipe", action:{UIApplication.shared.open(URL(string: "\(self.RecipeDetailIngred.sourceUrl)")!)})
             Button("Get a more detailed view", action:{UIApplication.shared.open(URL(string: "\(self.RecipeDetailIngred.spoonacularSourceUrl)")!)})
-            Spacer()
             Spacer()
         }
     }
